@@ -1,0 +1,204 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{titlesec}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}     % For math equations
+\usepackage{amssymb}     % For advanced math symbols
+\usepackage{amsfonts} % For math fonts
+\usepackage{gvv}
+\usepackage{esint}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\titleformat{\section}{\bfseries\large}{\thesection.}{1em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{caption}
+
+\begin{document}
+
+\textbf{Problem 12.526}
+
+Let $A$ be a $7\times7$ matrix such that 
+\begin{align}
+2A^2 - A^4 = I_7
+\end{align}
+where $I_7$ is the identity matrix. If $A$ has two distinct eigenvalues and each eigenvalue has geometric multiplicity $3$, then the total number of nonzero entries in the Jordan canonical form of $A$ equals:
+\begin{align*}
+\text{(A) } 6 \qquad \text{(B) } 7 \qquad \text{(C) } 8 \qquad \text{(D) } 9
+\end{align*}
+
+\vspace{1em}
+
+\section*{Given Data}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Value} \\
+\hline
+$A$ & Square matrix & $7\times7$ \\
+\hline
+Equation & Polynomial relation & $2A^2 - A^4 = I_7$ \\
+\hline
+Eigenvalues & Distinct eigenvalues of $A$ & Two distinct ($\lambda = \pm1$) \\
+\hline
+Geometric multiplicity (GM) & $\dim(\ker(A-\lambda I))$ & $3$ for each eigenvalue \\
+\hline
+Total GM & Sum over both eigenvalues & $3 + 3 = 6$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+
+\section*{Theory}
+
+\subsection*{1. Geometric Multiplicity}
+
+For a square matrix $A$ and eigenvalue $\lambda$,
+\begin{align}
+\text{GM}(\lambda) = \dim(\ker(A - \lambda I)).
+\end{align}
+It represents the number of linearly independent eigenvectors for $\lambda$.  
+
+If the \textbf{algebraic multiplicity (AM)} (how many times $\lambda$ repeats in the characteristic polynomial) equals the GM, then $A$ is diagonalizable.  
+Otherwise, $A$ is \textbf{defective} and has Jordan blocks larger than $1\times1$.
+
+\subsection*{2. Jordan Canonical Form}
+
+Every square matrix $A$ is similar to a matrix $J$ such that
+\begin{align}
+A = PJP^{-1}
+\end{align}
+where $J$ is the \textbf{Jordan canonical form} and $P$ is an invertible matrix whose columns are eigenvectors and generalized eigenvectors.
+
+A Jordan block of size $k$ corresponding to an eigenvalue $\lambda$ is:
+\begin{align}
+J_k(\lambda) =
+\myvec{
+\lambda & 1 & 0 & \cdots & 0\\
+0 & \lambda & 1 & \cdots & 0\\
+\vdots & & \ddots & \ddots & \vdots\\
+0 & \cdots & 0 & \lambda & 1\\
+0 & \cdots & \cdots & 0 & \lambda
+}.
+\end{align}
+
+The $1$ above the diagonal connects a \textbf{generalized eigenvector} to a true eigenvector.  
+For example:
+\begin{align}
+\myvec{\lambda & 1\\0 & \lambda}
+\end{align}
+represents one eigenvector $\vec{v_1}$ satisfying $(A-\lambda I)\vec{v_1}=0$, and one generalized eigenvector $\vec{v_2}$ satisfying $(A-\lambda I)\vec{v_2}=\vec{v_1}$.
+
+\subsection*{3. How Jordan Block Sizes are Determined Using Null Spaces}
+
+We define
+\begin{align}
+N_k(\lambda) = \ker((A - \lambda I)^k).
+\end{align}
+
+The spaces satisfy
+\begin{align}
+N_1(\lambda) \subseteq N_2(\lambda) \subseteq N_3(\lambda) \subseteq \cdots
+\end{align}
+and their dimensions reveal Jordan block structure:
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Quantity} & \textbf{Meaning} \\
+\hline
+$\dim N_1(\lambda)$ & Number of Jordan blocks (= GM) \\
+\hline
+$\dim N_2(\lambda) - \dim N_1(\lambda)$ & Number of blocks of size $\ge 2$ \\
+\hline
+$\dim N_3(\lambda) - \dim N_2(\lambda)$ & Number of blocks of size $\ge 3$ \\
+\hline
+\end{tabular}
+\end{table}
+
+Thus, computing $\ker((A-\lambda I)^k)$ for successive $k$ directly determines how many blocks of each size exist.
+
+\section*{Solution}
+
+\subsection*{Step 1: Simplify the given polynomial}
+\begin{align}
+2A^2 - A^4 = I_7
+&\Rightarrow A^4 - 2A^2 + I = 0\\
+&\Rightarrow (A^2 - I)^2 = 0
+\end{align}
+
+\subsection*{Step 2: Find eigenvalues}
+Let $\lambda$ be an eigenvalue of $A$.
+\begin{align}
+(\lambda^2 - 1)^2 = 0 
+&\Rightarrow \lambda^2 = 1\\
+&\Rightarrow \lambda = \pm 1
+\end{align}
+So, $A$ has two distinct eigenvalues: $+1$ and $-1$.
+
+\subsection*{Step 3: Use geometric multiplicity data}
+
+Given:
+\begin{align}
+\text{GM}(+1) = 3,\quad \text{GM}(-1) = 3.
+\end{align}
+So total eigenvectors $=6$.  
+Since $A$ is $7\times7$, one dimension is missing — corresponding to one generalized eigenvector.
+
+Hence, there must be one Jordan block of size $2$, and five of size $1$.
+
+\subsection*{Step 4: Construct the Jordan form}
+
+Assuming the $2\times2$ block belongs to $\lambda = +1$:
+\begin{align}
+J =
+\myvec{
+1 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & -1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & -1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & -1
+}.
+\end{align}
+
+\subsection*{Step 5: Count nonzero entries}
+
+Each $1\times1$ block contributes one nonzero (the eigenvalue).  
+The $2\times2$ block contributes three nonzeros (two diagonals and one above it):
+\begin{align}
+\text{Total nonzeros} = 5\times1 + 3 = 8
+\end{align}
+\[
+\boxed{\text{Answer: 8}}
+\]
+
+\section*{Conclusion}
+
+The null spaces $\ker((A-\lambda I)^k)$ reveal how large the Jordan blocks are for each eigenvalue.  
+Each difference in their dimensions gives the count of blocks of size $\ge k$.  
+
+Since only one eigenvector is missing from full diagonalizability, exactly one $2\times2$ block exists.  
+
+\[
+\boxed{\text{Total nonzero entries in Jordan canonical form of } A = 8.}
+\]
+
+\end{document}

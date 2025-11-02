@@ -1,0 +1,241 @@
+\documentclass{beamer}
+\mode<presentation>
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+
+\usetheme{Boadilla}
+\usecolortheme{lily}
+
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\setbeamertemplate{navigation symbols}{}
+
+% ----- Macros from your template -----
+\providecommand{\nCr}[2]{\,^{#1}C_{#2}}
+\providecommand{\nPr}[2]{\,^{#1}P_{#2}}
+\providecommand{\mbf}{\mathbf}
+\providecommand{\pr}[1]{\ensuremath{\Pr\left(#1\right)}}
+\providecommand{\qfunc}[1]{\ensuremath{Q\left(#1\right)}}
+\providecommand{\sbrak}[1]{\ensuremath{{}\left[#1\right]}}
+\providecommand{\lsbrak}[1]{\ensuremath{{}\left[#1\right.}}
+\providecommand{\rsbrak}[1]{\ensuremath{\left.#1\right]}}
+\providecommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\providecommand{\lbrak}[1]{\ensuremath{\left(#1\right.}}
+\providecommand{\rbrak}[1]{\ensuremath{\left.#1\right)}}
+\providecommand{\cbrak}[1]{\ensuremath{\left\{#1\right\}}}
+\providecommand{\lcbrak}[1]{\ensuremath{\left\{#1\right.}}
+\providecommand{\rcbrak}[1]{\ensuremath{\left.#1\right\}}}
+\newtheorem{rem}{Remark}
+\newcommand{\sgn}{\mathop{\mathrm{sgn}}}
+\providecommand{\abs}[1]{\left\vert#1\right\vert}
+\providecommand{\res}[1]{\Res\displaylimits_{#1}}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\mtx}[1]{\mathbf{#1}}
+\providecommand{\mean}[1]{E\left[ #1 \right]}
+\providecommand{\fourier}{\overset{\mathcal{F}}{ \rightleftharpoons}}
+\providecommand{\system}{\overset{\mathcal{H}}{ \longleftrightarrow}}
+\providecommand{\dec}[2]{\ensuremath{\overset{#1}{\underset{#2}{\gtrless}}}}
+\newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
+\let\vec\mathbf
+
+\lstset{language=C,frame=single,breaklines=true,columns=fullflexible}
+\numberwithin{equation}{section}
+
+\title{Problem 12.526 — Jordan Canonical Form \& GM}
+\author{Aryansingh Sonaye \\ AI25BTECH11032 \\ EE1030 - Matrix Theory}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Problem}
+\begin{frame}
+\frametitle{Problem 12.526}
+Let $A$ be a $7\times7$ matrix such that 
+\begin{align}
+2A^2 - A^4 = I_7
+\end{align}
+where $I_7$ is the identity matrix. If $A$ has two distinct eigenvalues and each eigenvalue has geometric multiplicity $3$, then the total number of nonzero entries in the Jordan canonical form of $A$ equals:
+\begin{align*}
+\text{(A) } 6 \qquad \text{(B) } 7 \qquad \text{(C) } 8 \qquad \text{(D) } 9
+\end{align*}
+\end{frame}
+
+\section{Given Data}
+\begin{frame}
+\frametitle{Given Data}
+\begin{table}[H]\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Value} \\
+\hline
+$A$ & Square matrix & $7\times7$ \\
+\hline
+Equation & Polynomial relation & $2A^2 - A^4 = I_7$ \\
+\hline
+Eigenvalues & Distinct eigenvalues of $A$ & Two distinct ($\lambda=\pm1$) \\
+\hline
+Geometric multiplicity (GM) & $\dim(\ker(A-\lambda I))$ & $3$ for each eigenvalue \\
+\hline
+Total GM & Sum over both eigenvalues & $3+3=6$ \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+\section{Theory}
+\subsection{Geometric Multiplicity}
+\begin{frame}
+\frametitle{1. Geometric Multiplicity}
+For a square matrix $A$ and eigenvalue $\lambda$,
+\begin{align}
+\text{GM}(\lambda) = \dim\!\big(\ker(A-\lambda I)\big).
+\end{align}
+It represents the number of linearly independent eigenvectors for $\lambda$.
+
+If the \textbf{algebraic multiplicity (AM)} equals GM, then $A$ is diagonalizable; otherwise $A$ is \textbf{defective} and has Jordan blocks larger than $1\times1$.
+\end{frame}
+
+\subsection{Jordan Canonical Form}
+\begin{frame}
+\frametitle{2. Jordan Canonical Form}
+Every square matrix $A$ is similar to a matrix $J$ such that
+\begin{align}
+A = PJP^{-1}
+\end{align}
+where $J$ is the \textbf{Jordan canonical form} and $P$ has columns that are eigenvectors and generalized eigenvectors.
+
+A Jordan block of size $k$ for eigenvalue $\lambda$ is:
+\begin{align}
+J_k(\lambda) =
+\myvec{
+\lambda & 1 & 0 & \cdots & 0\\
+0 & \lambda & 1 & \cdots & 0\\
+\vdots & & \ddots & \ddots & \vdots\\
+0 & \cdots & 0 & \lambda & 1\\
+0 & \cdots & \cdots & 0 & \lambda
+}.
+\end{align}
+The $1$ above the diagonal links a generalized eigenvector to a true eigenvector, e.g.
+\begin{align}
+\myvec{\lambda & 1\\0 & \lambda},
+\end{align}
+with $(A-\lambda I)\vec{v_1}=0$ and $(A-\lambda I)\vec{v_2}=\vec{v_1}$.
+\end{frame}
+
+\subsection{Null-space Ladder}
+\begin{frame}
+\frametitle{3. Determining Block Sizes via Null Spaces}
+Define
+\begin{align}
+N_k(\lambda)=\ker\!\big((A-\lambda I)^k\big).
+\end{align}
+These satisfy
+\begin{align}
+N_1(\lambda)\subseteq N_2(\lambda)\subseteq N_3(\lambda)\subseteq\cdots
+\end{align}
+and their dimensions reveal Jordan structure:
+
+\begin{table}[H]\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Quantity} & \textbf{Meaning} \\ \hline
+$\dim N_1(\lambda)$ & Number of Jordan blocks (= GM) \\ \hline
+$\dim N_2-\dim N_1$ & Number of blocks of size $\ge2$ \\ \hline
+$\dim N_3-\dim N_2$ & Number of blocks of size $\ge3$ \\ \hline
+\end{tabular}
+\end{table}
+Thus, computing $\ker\big((A-\lambda I)^k\big)$ for successive $k$ tells how many blocks of each size exist.
+\end{frame}
+
+\section{Solution}
+\subsection{Polynomial \& Eigenvalues}
+\begin{frame}
+\frametitle{Step 1: Polynomial \& Step 2: Eigenvalues}
+\begin{align}
+2A^2 - A^4 = I_7
+&\Rightarrow A^4 - 2A^2 + I = 0\\
+&\Rightarrow (A^2 - I)^2 = 0
+\end{align}
+Let $\lambda$ be an eigenvalue of $A$.
+\begin{align}
+(\lambda^2 - 1)^2 = 0 \Rightarrow \lambda^2 = 1 \Rightarrow \lambda = \pm 1.
+\end{align}
+So $A$ has two distinct eigenvalues: $+1$ and $-1$.
+\end{frame}
+
+\subsection{GM data \texorpdfstring{$\Rightarrow$}{=>} structure}
+\begin{frame}
+\frametitle{Step 3: GM Data $\Rightarrow$ Jordan Structure}
+\begin{align}
+\text{GM}(+1)=3,\qquad \text{GM}(-1)=3.
+\end{align}
+Total eigenvectors $=6$. Since $A$ is $7\times7$, one dimension is missing — corresponding to one generalized eigenvector.\\[4pt]
+$\Rightarrow$ There is \textbf{one} Jordan block of size $2$ and \textbf{five} blocks of size $1$.
+\end{frame}
+
+\subsection{Jordan matrix}
+\begin{frame}
+\frametitle{Step 4: Jordan Form}
+(Assume the $2\times2$ block belongs to $\lambda=+1$; the count is unaffected.)
+\begin{align}
+J =
+\myvec{
+1 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & -1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & -1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & -1
+}.
+\end{align}
+\end{frame}
+
+\subsection{Counting nonzeros}
+\begin{frame}
+\frametitle{Step 5: Count Nonzero Entries}
+Each $1\times1$ block contributes one nonzero.  
+The $2\times2$ block contributes three (two diagonal entries and one superdiagonal):
+\begin{align}
+\text{Total nonzeros}=5\times1+3=8.
+\end{align}
+\begin{block}{\centering Final Answer}
+\Large \(\boxed{8}\)
+\end{block}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}
+\frametitle{Conclusion}
+The null spaces $\ker\!\big((A-\lambda I)^k\big)$ reveal the Jordan block sizes: each jump in $\dim N_k$ counts blocks of size $\ge k$.  
+Here, only one eigenvector is missing from full diagonalizability $\Rightarrow$ exactly one $2\times2$ block.
+
+\begin{align}
+\boxed{\text{Total nonzero entries in the Jordan form of }A=8.}
+\end{align}
+\end{frame}
+
+\end{document}
+

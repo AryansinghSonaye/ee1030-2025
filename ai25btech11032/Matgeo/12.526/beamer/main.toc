@@ -1,0 +1,12 @@
+\beamer@sectionintoc {1}{Problem}{2}{0}{1}
+\beamer@sectionintoc {2}{Given Data}{3}{0}{2}
+\beamer@sectionintoc {3}{Theory}{4}{0}{3}
+\beamer@subsectionintoc {3}{1}{Geometric Multiplicity}{4}{0}{3}
+\beamer@subsectionintoc {3}{2}{Jordan Canonical Form}{5}{0}{3}
+\beamer@subsectionintoc {3}{3}{Null-space Ladder}{6}{0}{3}
+\beamer@sectionintoc {4}{Solution}{7}{0}{4}
+\beamer@subsectionintoc {4}{1}{Polynomial \& Eigenvalues}{7}{0}{4}
+\beamer@subsectionintoc {4}{2}{GM data $\Rightarrow $ structure}{8}{0}{4}
+\beamer@subsectionintoc {4}{3}{Jordan matrix}{9}{0}{4}
+\beamer@subsectionintoc {4}{4}{Counting nonzeros}{10}{0}{4}
+\beamer@sectionintoc {5}{Conclusion}{11}{0}{5}
